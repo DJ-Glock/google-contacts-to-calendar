@@ -12,13 +12,13 @@
 
 
 // Create events for "significant dates" of the contact (other than birthdays)
-let CREATE_SPECIAL_EVENTS = true; // false will skipp the creation and just do birthdays
+let CREATE_SPECIAL_EVENTS = true;
 
-// Include all contacts (change to true to include all)?
-let INCLUDE_ALL_CONTACTS = false; // default: false (skipping hidden and other contacts)
+// Include all contacts (skipping hidden and other contacts)
+let INCLUDE_ALL_CONTACTS = false;
 
 // Show the birth year of the contact in the calendar entry 
-let SHOW_BIRTH_YEAR = true; // default: true, false will show the name only
+let SHOW_BIRTH_YEAR = true;
 
 // Create reminder for the events x minutes before the event, 0 means at the time of the event -1 does not set a reminder
 let REMINDER_EMAIL = false;
@@ -38,7 +38,7 @@ let DEFAYLT_EVENT_YEAR = 1900
 var CALENDAR_NAME = "BirthdaysCal"; 
 
 // Output log entries (true/false)
-var LOGGING_ENABLED = true; // defaul: false, generally for development/debugging only - but feel free
+var LOGGING_ENABLED = true;
 
 // Max retries count
 let MAX_RETRIES_COUNT = 3
@@ -52,10 +52,11 @@ function updateBirthdays() {
   }
   calendar = CalendarApp.getCalendarsByName(CALENDAR_NAME)[0];
 
-// Standard is 100 years of appointments, so this 3 calls should cover all generated events:
-  clearCalendar_(1899);
-  clearCalendar_(1999);
-  clearCalendar_(2099);
+// Standard is 200 years of appointments, so this 4 calls should cover all generated events:
+  clearCalendar(1899);
+  clearCalendar(1999);
+  clearCalendar(2099);
+  clearCalendar(2199);
   createBirthdayEvents_v2();
 }
 

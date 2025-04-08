@@ -1,9 +1,9 @@
 function createBirthdayEvents_v2() {
   // Reading all contacts of the users Google Contacts.
-  // (info) The request is paginated, as the maximum number of contacts is 1.000 otherwise.
-  //        So far it has been tested with around 1.200 contacts, which is working fine at
-  //        least once per day (too many calls will lead to failures due to limitations).
-  //        Anyone running with more is welcome to mention this.
+  // The request is paginated, as the maximum number of contacts is 1.000 otherwise.
+  // So far it has been tested with around 1.200 contacts, which is working fine at
+  // least once per day (too many calls will lead to failures due to limitations).
+
   var people = People.People;
   var connections = people.Connections.list('people/me', {
     'pageSize': 1000, // Fetch up to 1000 contacts at a time
@@ -22,7 +22,6 @@ function createBirthdayEvents_v2() {
     nextPageToken = nextPage.nextPageToken;
   }
 
-  // Checking if contacts exist, if not, the script is aborted.
   if (!contacts) {
     if (LOGGING_ENABLED) Logger.log("No contacts found, exiting.");
     return;
@@ -55,7 +54,7 @@ function createBirthdayEvents_v2() {
             addBirthday(person)
             break
           } catch (e) {
-            console.log("Failed to add birthday for " + person.names[0].displayName + "(" + tryNumber + ")");
+            console.log("Failed to add birthday for " + person.names[0].displayName + "(" + tryNumber + "): " + e);
             if (tryNumber >= MAX_RETRIES_COUNT) {
               console.log("Retries exhausted")
               throw(e)
@@ -75,7 +74,7 @@ function createBirthdayEvents_v2() {
             addSpecialEvent(person)
             break
           } catch (e) {
-            console.log("Failed to add special event for " + person.names[0].displayName + "(" + tryNumber + ")");
+            console.log("Failed to add special event for " + person.names[0].displayName + "(" + tryNumber + "): " + e);
             if (tryNumber >= MAX_RETRIES_COUNT) {
               console.log("Retries exhausted")
               throw(e)
@@ -179,7 +178,7 @@ function addSpecialEvent(person) {
   }
 }
 
-function clearCalendar_(baseYear) {
+function clearCalendar(baseYear) {
   var events = calendar.getEvents(new Date(baseYear + "/01/01"), new Date((baseYear + 1) + "/01/01"));
 
   for (var i in events) {
@@ -201,7 +200,7 @@ function clearCalendar_(baseYear) {
           if (LOGGING_ENABLED) Logger.log("Removed " + event.getTitle());
           break
         } catch (e) {
-          console.log("Failed to remove event series" + event.getTitle() + "(" + tryNumber + ")")
+          console.log("Failed to remove event series" + event.getTitle() + "(" + tryNumber + "): " + e);
           if (tryNumber >= MAX_RETRIES_COUNT) {
             console.log("Retries exhausted")
             throw(e)
