@@ -57,7 +57,7 @@ function updateBirthdays() {
   clearCalendar(1999);
   clearCalendar(2099);
   clearCalendar(2199);
-  createBirthdayEvents_v2();
+  createBirthdayEvents();
 }
 
 // Function required for Web App Deployement

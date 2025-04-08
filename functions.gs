@@ -1,4 +1,4 @@
-function createBirthdayEvents_v2() {
+function createBirthdayEvents() {
   // Reading all contacts of the users Google Contacts.
   // The request is paginated, as the maximum number of contacts is 1.000 otherwise.
   // So far it has been tested with around 1.200 contacts, which is working fine at
